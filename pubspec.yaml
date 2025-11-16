@@ -1,0 +1,85 @@
+name: bank_quantech
+description: "A new Flutter project."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Core
+  flutter_localizations:
+    sdk: flutter
+  mask_text_input_formatter: ^2.9.0
+  riverpod_annotation: ^3.0.3
+  flutter_riverpod: ^3.0.3
+  go_router: ^17.0.0
+  intl: ^0.20.2
+  # Widgets
+  cupertino_icons: ^1.0.8
+  flutter_custom_carousel: ^0.1.0+1
+  card_swiper: ^3.0.1
+  # Natifs
+  flutter_native_splash: ^2.4.7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  # Lints
+  flutter_lints: ^6.0.0
+  # Builder Runner
+  build_runner: ^2.4.15
+  # Generator
+  flutter_gen_runner: ^5.12.0
+  riverpod_generator: ^3.0.3
+  go_router_builder: ^4.1.1
+  custom_lint: ^0.8.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/images/
+    - assets/mocks/
+  fonts:
+    - family: Satoshi
+      fonts:
+        - asset: assets/fonts/Satoshi/Satoshi-Black.otf
+        - asset: assets/fonts/Satoshi/Satoshi-Light.otf
+        - asset: assets/fonts/Satoshi/Satoshi-Medium.otf
+        - asset: assets/fonts/Satoshi/Satoshi-Regular.otf
+        - asset: assets/fonts/Satoshi/Satoshi-Bold.otf
+    - family: GeneralSans
+      fonts:
+        - asset: assets/fonts/GeneralSans/GeneralSans-Light.otf
+        - asset: assets/fonts/GeneralSans/GeneralSans-Extralight.otf
+        - asset: assets/fonts/GeneralSans/GeneralSans-Medium.otf
+        - asset: assets/fonts/GeneralSans/GeneralSans-Regular.otf
+        - asset: assets/fonts/GeneralSans/GeneralSans-SemiBold.otf
+        - asset: assets/fonts/GeneralSans/GeneralSans-Bold.otf
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat/Montserrat-Black.ttf
+        - asset: assets/fonts/Montserrat/Montserrat-Light.ttf
+        - asset: assets/fonts/Montserrat/Montserrat-ExtraLight.ttf
+        - asset: assets/fonts/Montserrat/Montserrat-Medium.ttf
+        - asset: assets/fonts/Montserrat/Montserrat-Regular.ttf
+        - asset: assets/fonts/Montserrat/Montserrat-SemiBold.ttf
+        - asset: assets/fonts/Montserrat/Montserrat-Bold.ttf
+        - asset: assets/fonts/Montserrat/Montserrat-ExtraBold.ttf
+        - asset: assets/fonts/Montserrat/Montserrat-Thin.ttf
+
+flutter_gen:
+  line_length: 80
+  output: lib/core/gen/assets
+  
+  # Optional
+  integrations:
+    image: true
+    flutter_svg: true
