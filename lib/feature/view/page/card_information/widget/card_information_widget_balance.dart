@@ -1,11 +1,13 @@
 part of 'card_information_widget.dart';
 
-class CardInformationBalance extends StatelessWidget {
+class CardInformationBalance extends ConsumerWidget {
   const CardInformationBalance({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = context.theme;
+    final selectCard = ref.watch(cardAddSelectedCardProvider);
+    // final account = selectCard.value.account!;
     return ListTile(
       titleTextStyle: theme.textTheme.titleMedium!.copyWith(
         color: theme.colorScheme.onSurfaceVariant,
@@ -21,12 +23,12 @@ class CardInformationBalance extends StatelessWidget {
       title: const Text("Total Balance"),
       subtitle: Row(
         children: [
-          const Expanded(child: Text("\$ 65,430.00")),
+          Expanded(child: Text("\$ 0.00")),
           Text.rich(
             TextSpan(
               children: [
                 TextSpan(
-                  text: "20% ",
+                  text: "00% ",
                   style: theme.textTheme.bodyMedium!.copyWith(
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.0,

@@ -21,10 +21,15 @@ dependencies:
   intl: ^0.20.2
   # Widgets
   cupertino_icons: ^1.0.8
-  flutter_custom_carousel: ^0.1.0+1
-  card_swiper: ^3.0.1
+  stacked_list_carousel: ^1.1.0
+  super_banners: ^0.0.1
   # Natifs
+  flutter_local_notifications: ^19.4.1
   flutter_native_splash: ^2.4.7
+  # sembast_sqflite: ^2.2.1
+  path_provider: ^2.1.5
+  sembast: ^3.8.5+1
+  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:

@@ -1,11 +1,14 @@
 import 'package:flutter/widgets.dart';
 
+import 'package:bank_quantech/feature/feature.dart';
+
 enum CardType { visa }
 
 class CreditCardEntity {
   const CreditCardEntity({
     required this.id,
-    required this.accountId,
+    required this.createdAt,
+    required this.updatedAt,
     required this.cardType,
     required this.cardNumber,
     required this.cardHolderName,
@@ -13,28 +16,27 @@ class CreditCardEntity {
     required this.cvv,
     required this.isActive,
     required this.cardColor,
-    this.createdAt,
-    this.updatedAt,
+    this.account,
   });
 
   final String id;
-  final String accountId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   final CardType cardType;
+  final Color cardColor;
   final String cardNumber; // masqué
   final String cardHolderName;
   final DateTime expiryDate;
   final String cvv; // chiffré
   final bool isActive;
 
-  final Color cardColor;
-
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+  final AccountEntity? account;
 
   CreditCardEntity copyWith({
     String? id,
-    String? accountId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
     CardType? cardType,
     String? cardNumber,
     String? cardHolderName,
@@ -42,12 +44,11 @@ class CreditCardEntity {
     String? cvv,
     bool? isActive,
     Color? cardColor,
-    DateTime? createdAt,
-    DateTime? updatedAt,
+    AccountEntity? account,
   }) {
     return CreditCardEntity(
       id: id ?? this.id,
-      accountId: accountId ?? this.accountId,
+      account: account ?? this.account,
       cardType: cardType ?? this.cardType,
       cardNumber: cardNumber ?? this.cardNumber,
       cardHolderName: cardHolderName ?? this.cardHolderName,
@@ -63,7 +64,7 @@ class CreditCardEntity {
   CreditCardEntity clone() {
     return CreditCardEntity(
       id: id,
-      accountId: accountId,
+      account: account,
       cardType: cardType,
       cardNumber: cardNumber,
       cardHolderName: cardHolderName,
@@ -80,7 +81,7 @@ class CreditCardEntity {
   int get hashCode {
     return Object.hash(
       id,
-      accountId,
+      account,
       cardType,
       cardNumber,
       cardHolderName,
@@ -97,7 +98,7 @@ class CreditCardEntity {
   bool operator ==(Object other) {
     return other is CreditCardEntity &&
         other.id == id &&
-        other.accountId == accountId &&
+        other.account == account &&
         other.cardType == cardType &&
         other.cardNumber == cardNumber &&
         other.cardHolderName == cardHolderName &&
@@ -113,7 +114,7 @@ class CreditCardEntity {
   String toString() {
     return '$runtimeType('
         'id: $id,'
-        'accountId: $accountId,'
+        'account: $account,'
         'cardType: $cardType,'
         'cardNumber: $cardNumber,'
         'cardHolderName: $cardHolderName,'

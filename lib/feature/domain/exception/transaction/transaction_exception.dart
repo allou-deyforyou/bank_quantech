@@ -248,3 +248,11 @@ class TransactionOutsideBusinessHoursException extends TransactionException {
         'Current time: $currentTime',
       );
 }
+
+class TransactionUnknownException extends TransactionException {
+  const TransactionUnknownException()
+    : super(
+        'Unknown transaction error',
+        'An unknown error has occurred with the transaction',
+      );
+}

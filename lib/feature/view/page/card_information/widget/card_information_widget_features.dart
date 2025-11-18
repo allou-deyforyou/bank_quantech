@@ -31,6 +31,7 @@ class CardInformationEarnCard extends StatelessWidget {
       child: Card(
         elevation: 0.0,
         margin: EdgeInsets.zero,
+        color: theme.colorScheme.surfaceContainer,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24.0),
         ),
@@ -51,9 +52,19 @@ class CardInformationEarnCard extends StatelessWidget {
                 letterSpacing: 0.0,
               ),
               title: const Text("Earn"),
-              subtitle: const Text("\$ 1,250.00"),
+              subtitle: const Text("\$ 00.00"),
             ),
-            Expanded(child: Container()),
+            Expanded(
+              child: Center(
+                child: Text(
+                  "No Earnings Yet",
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -72,6 +83,7 @@ class CardInformationSpendCard extends StatelessWidget {
       child: Card(
         elevation: 0.0,
         margin: EdgeInsets.zero,
+        color: theme.colorScheme.surfaceContainer,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24.0),
         ),
@@ -92,9 +104,19 @@ class CardInformationSpendCard extends StatelessWidget {
                 letterSpacing: 0.0,
               ),
               title: const Text("Spend"),
-              subtitle: const Text("\$ 1,250.00"),
+              subtitle: const Text("\$ 00.00"),
             ),
-            Expanded(child: Container()),
+            Expanded(
+              child: Center(
+                child: Text(
+                  "No Spendings Yet",
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

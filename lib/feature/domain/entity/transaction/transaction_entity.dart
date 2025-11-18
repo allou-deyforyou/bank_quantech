@@ -7,41 +7,40 @@ enum TransactionStatus { pending, completed, failed, cancelled }
 class TransactionEntity {
   const TransactionEntity({
     required this.id,
-    required this.accountId,
-    this.cardId,
+    required this.account,
+    required this.card,
     required this.amount,
     required this.type,
     required this.category,
     required this.description,
-    this.merchantName,
+    required this.merchantName,
     required this.transactionDate,
     required this.status,
-    this.reference,
-    this.createdAt,
-    this.updatedAt,
+    required this.reference,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   final String id;
-
-  final String accountId;
-  final String? cardId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   final double amount;
   final TransactionType type;
-  final TransactionCategoryEntity category;
+  final TransactionCategoryEntity? category;
   final String description;
   final String? merchantName;
   final DateTime transactionDate;
   final TransactionStatus status;
   final String? reference;
 
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+  final AccountEntity? account;
+  final CreditCardEntity? card;
 
   TransactionEntity copyWith({
     String? id,
-    String? accountId,
-    String? cardId,
+    AccountEntity? account,
+    CreditCardEntity? card,
     double? amount,
     TransactionType? type,
     TransactionCategoryEntity? category,
@@ -55,8 +54,8 @@ class TransactionEntity {
   }) {
     return TransactionEntity(
       id: id ?? this.id,
-      accountId: accountId ?? this.accountId,
-      cardId: cardId ?? this.cardId,
+      account: account ?? this.account,
+      card: card ?? this.card,
       amount: amount ?? this.amount,
       type: type ?? this.type,
       category: category ?? this.category,
@@ -73,8 +72,8 @@ class TransactionEntity {
   TransactionEntity clone() {
     return TransactionEntity(
       id: id,
-      accountId: accountId,
-      cardId: cardId,
+      account: account,
+      card: card,
       amount: amount,
       type: type,
       category: category,
@@ -89,28 +88,29 @@ class TransactionEntity {
   }
 
   @override
-  int get hashCode =>
-      id.hashCode ^
-      accountId.hashCode ^
-      (cardId?.hashCode ?? 0) ^
-      amount.hashCode ^
-      type.hashCode ^
-      category.hashCode ^
-      description.hashCode ^
-      (merchantName?.hashCode ?? 0) ^
-      transactionDate.hashCode ^
-      status.hashCode ^
-      (reference?.hashCode ?? 0) ^
-      (createdAt?.hashCode ?? 0) ^
-      (updatedAt?.hashCode ?? 0);
+  int get hashCode => Object.hash(
+    id,
+    account?.id,
+    card?.id,
+    amount,
+    type,
+    category,
+    description,
+    merchantName,
+    transactionDate,
+    status,
+    reference,
+    createdAt,
+    updatedAt,
+  );
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TransactionEntity &&
         other.id == id &&
-        other.accountId == accountId &&
-        other.cardId == cardId &&
+        other.account?.id == account?.id &&
+        other.card?.id == card?.id &&
         other.amount == amount &&
         other.type == type &&
         other.category == category &&
@@ -127,8 +127,8 @@ class TransactionEntity {
   String toString() {
     return '$runtimeType('
         'id: $id,'
-        'accountId: $accountId,'
-        'cardId: $cardId,'
+        'createdAt: $createdAt,'
+        'updatedAt: $updatedAt,'
         'amount: $amount,'
         'type: $type,'
         'category: $category,'
@@ -137,8 +137,6 @@ class TransactionEntity {
         'transactionDate: $transactionDate,'
         'status: $status,'
         'reference: $reference,'
-        'createdAt: $createdAt,'
-        'updatedAt: $updatedAt'
         ')';
   }
 }

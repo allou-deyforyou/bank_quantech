@@ -1,17 +1,33 @@
 part of 'home_widget.dart';
 
-class HomeTransactionsSliverList extends StatelessWidget {
+class HomeTransactionsSliverList extends ConsumerWidget {
   const HomeTransactionsSliverList({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final transactionsValue = ref.watch(homeTransactionControllerProvider);
+    final transactions = transactionsValue.value ?? [];
     return SliverMainAxisGroup(
       slivers: [
         const SliverToBoxAdapter(child: HomeTransactionsLabelButton()),
-        SliverList.builder(
-          itemBuilder: (context, index) {
-            return const HomeTransactionsWidget();
-          },
+        SliverVisibility(
+          visible: transactions.isNotEmpty,
+          replacementSliver: SliverFillRemaining(
+            hasScrollBody: false,
+            child: Center(
+              child: Text(
+                "No recent activities",
+                style: context.theme.textTheme.bodyLarge,
+              ),
+            ),
+          ),
+          sliver: SliverList.builder(
+            itemBuilder: (context, index) {
+              final transaction = transactions[index];
+              return HomeTransactionsWidget(transaction: transaction);
+            },
+            itemCount: transactions.length,
+          ),
         ),
       ],
     );
@@ -48,14 +64,17 @@ class HomeTransactionsLabelButton extends StatelessWidget {
   }
 
   VoidCallback? _onPressed(BuildContext context) {
-    return () {
-      // Navigator.of(context).pop();
-    };
+    return null;
+    // return () {
+    //   // const TransactionsPageRoute().push(context);
+    // };
   }
 }
 
 class HomeTransactionsWidget extends StatelessWidget {
-  const HomeTransactionsWidget({super.key});
+  const HomeTransactionsWidget({super.key, required this.transaction});
+
+  final TransactionEntity transaction;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +95,7 @@ class HomeTransactionsWidget extends StatelessWidget {
         width: kMinInteractiveDimensionCupertino,
         height: kMinInteractiveDimensionCupertino,
         decoration: ShapeDecoration(
-          color: theme.colorScheme.surfaceContainerHighest,
+          color: theme.colorScheme.surfaceContainer,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
@@ -97,7 +116,7 @@ class HomeTransactionsWidget extends StatelessWidget {
 
   VoidCallback _onTap(BuildContext context) {
     return () {
-      // Navigator.of(context).pop();
+      const TransactionsDetailsPageRoute().push(context);
     };
   }
 }

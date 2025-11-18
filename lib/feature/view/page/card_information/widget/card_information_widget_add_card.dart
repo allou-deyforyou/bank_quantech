@@ -27,10 +27,13 @@ class CardInformationAddCardButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
     return FilledButton.tonalIcon(
       style: FilledButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        backgroundColor: theme.colorScheme.surfaceContainer,
+        foregroundColor: theme.colorScheme.onSurfaceVariant,
         iconAlignment: IconAlignment.end,
         shape: const StadiumBorder(),
       ),

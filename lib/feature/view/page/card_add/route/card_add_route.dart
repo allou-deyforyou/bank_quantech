@@ -19,7 +19,7 @@ final class CardAddPageRoute extends GoRouteData with $CardAddPageRoute {
       key: state.pageKey,
       child: ProviderScope(
         retry: (retryCount, error) => null,
-        child: const CardAddPage(),
+        child: const LoaderScope(child: CardAddPage()),
       ),
     );
   }

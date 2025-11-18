@@ -8,12 +8,19 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      resizeToAvoidBottomInset: false,
       body: CustomScrollView(
         slivers: [
           HomeSliverAppbar(),
-          SliverToBoxAdapter(child: HomeCardCarousel()),
-          SliverToBoxAdapter(child: HomeActionButtons()),
-          HomeTransactionsSliverList(),
+          HomeNoCardSliverWrapper(
+            sliver: SliverMainAxisGroup(
+              slivers: [
+                SliverToBoxAdapter(child: HomeCardCarousel()),
+                SliverToBoxAdapter(child: HomeActionButtons()),
+                HomeTransactionsSliverList(),
+              ],
+            ),
+          ),
         ],
       ),
     );

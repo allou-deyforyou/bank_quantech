@@ -1,0 +1,11 @@
+[
+    {
+        "id": "1",
+        "name": "Shopping",
+        "description": "Expenses related to shopping",
+        "icon": "0xe8cc",
+        "color": "4294198070",
+        "type": "expense",
+        "is_default": "true"
+    }
+]

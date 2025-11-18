@@ -22,18 +22,36 @@ class CardAddColorField extends StatelessWidget {
           top: false,
           bottom: false,
           minimum: kTabLabelPadding,
-          child: Row(
-            spacing: 12.0,
-            children: [
-              CardAddColor(color: Colors.blue),
-              CardAddColor(color: Colors.purple, isSelected: true),
-              CardAddColor(color: Colors.yellow),
-            ],
+          child: Consumer(
+            builder: (context, ref, child) {
+              final availableColors = ref.watch(cardAddAvailableColorsProvider);
+              final selectedColor = ref.watch(cardAddSelectedColorProvider);
+              return Row(
+                spacing: 12.0,
+                children: List.of(
+                  availableColors.map((color) {
+                    return CardAddColor(
+                      color: color,
+                      isSelected: color == selectedColor,
+                      onTap: _onTap(context),
+                    );
+                  }),
+                ),
+              );
+            },
           ),
         ),
-        SizedBox(height: 6.0),
+        SizedBox(height: 13.0),
       ],
     );
+  }
+
+  ValueChanged<Color>? _onTap(BuildContext context) {
+    final ref = ProviderScope.containerOf(context);
+    final controller = ref.read(cardAddSelectedColorProvider.notifier);
+    return (color) {
+      controller.selectColor(color);
+    };
   }
 }
 
@@ -52,17 +70,27 @@ class CardAddColor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
-    return Container(
-      width: 28.0,
-      height: 28.0,
-      decoration: ShapeDecoration(
-        color: color,
-        shape: CircleBorder(
-          side: isSelected
-              ? BorderSide(color: theme.colorScheme.onSurface, width: 3.0)
-              : BorderSide(color: Colors.transparent, width: 3.0),
-        ),
+    final shape = CircleBorder(
+      side: isSelected
+          ? BorderSide(color: theme.colorScheme.onSurface, width: 3.0)
+          : BorderSide(color: Colors.transparent, width: 3.0),
+    );
+    return InkWell(
+      customBorder: shape,
+      onTap: _onTap(context),
+      child: Container(
+        width: 28.0,
+        height: 28.0,
+        decoration: ShapeDecoration(color: color, shape: shape),
       ),
     );
+  }
+
+  VoidCallback? _onTap(BuildContext context) {
+    if (onTap == null) return null;
+    return () {
+      Feedback.forTap(context);
+      onTap!(color);
+    };
   }
 }

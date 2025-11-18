@@ -21,10 +21,28 @@ final $appRouteObserver = RouteObserver<PageRoute<void>>();
         TypedGoRoute<CardInformationPageRoute>(
           path: CardInformationPageRoute.path,
           name: CardInformationPageRoute.name,
+          routes: [
+            TypedGoRoute<StatisticsPageRoute>(
+              path: StatisticsPageRoute.path,
+              name: StatisticsPageRoute.name,
+            ),
+          ],
         ),
-        TypedGoRoute<StatisticsPageRoute>(
-          path: StatisticsPageRoute.path,
-          name: StatisticsPageRoute.name,
+        TypedGoRoute<TransactionsPageRoute>(
+          path: TransactionsPageRoute.path,
+          name: TransactionsPageRoute.name,
+        ),
+        TypedGoRoute<TransactionsDetailsPageRoute>(
+          path: TransactionsDetailsPageRoute.path,
+          name: TransactionsDetailsPageRoute.name,
+        ),
+        TypedGoRoute<OperationReceivePageRoute>(
+          path: OperationReceivePageRoute.path,
+          name: OperationReceivePageRoute.name,
+        ),
+        TypedGoRoute<OperationSendPageRoute>(
+          path: OperationSendPageRoute.path,
+          name: OperationSendPageRoute.name,
         ),
       ],
     ),

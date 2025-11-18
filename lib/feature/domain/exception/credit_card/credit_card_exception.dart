@@ -184,3 +184,11 @@ class CreditCardSearchException extends CreditCardException {
   const CreditCardSearchException(String query, String reason)
     : super('Credit card search failed', 'Query: $query, Reason: $reason');
 }
+
+class CreditCardUnknownException extends CreditCardException {
+  const CreditCardUnknownException()
+    : super(
+        'Unknown credit card error',
+        'An unknown error has occurred with the credit card',
+      );
+}

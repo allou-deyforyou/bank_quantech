@@ -160,3 +160,11 @@ class AccountLimitExceededException extends AccountException {
         'Current: $currentCount, Max allowed: $maxAllowed',
       );
 }
+
+class AccountUnknownException extends AccountException {
+  const AccountUnknownException()
+    : super(
+        'Unknown account error',
+        'An unknown error has occurred with the account',
+      );
+}

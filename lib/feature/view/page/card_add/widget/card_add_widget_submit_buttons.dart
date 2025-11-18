@@ -27,6 +27,7 @@ class CardAddSaveButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
     return Padding(
       padding: kTabLabelPadding,
       child: FilledButton(
@@ -34,6 +35,10 @@ class CardAddSaveButton extends StatelessWidget {
           padding: EdgeInsets.zero,
           minimumSize: const Size.fromHeight(kMinInteractiveDimensionCupertino),
           maximumSize: const Size.fromHeight(kMinInteractiveDimensionCupertino),
+          textStyle: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w500,
+            letterSpacing: 0.0,
+          ),
         ),
         onPressed: _onPressed(context),
         child: const Text("Save"),
@@ -42,7 +47,17 @@ class CardAddSaveButton extends StatelessWidget {
   }
 
   VoidCallback? _onPressed(BuildContext context) {
-    return () {};
+    final ref = ProviderScope.containerOf(context);
+    return () async {
+      if (Form.of(context).validate()) {
+        context.startLoading();
+        await ref.refresh(cardAddCreateCreditCardControllerProvider.future);
+        if (context.mounted) {
+          context.stopLoading();
+          const HomePageRoute().go(context);
+        }
+      }
+    };
   }
 }
 
@@ -51,6 +66,7 @@ class CardAddCancelButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
     return Padding(
       padding: kTabLabelPadding,
       child: TextButton(
@@ -58,6 +74,10 @@ class CardAddCancelButton extends StatelessWidget {
           padding: EdgeInsets.zero,
           minimumSize: const Size.fromHeight(kMinInteractiveDimensionCupertino),
           maximumSize: const Size.fromHeight(kMinInteractiveDimensionCupertino),
+          textStyle: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w500,
+            letterSpacing: 0.0,
+          ),
         ),
         onPressed: _onPressed(context),
         child: const Text("Cancel"),

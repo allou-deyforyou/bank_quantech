@@ -6,7 +6,11 @@ import 'package:bank_quantech/feature/feature.dart';
 
 final class CardInformationPageRoute extends GoRouteData
     with $CardInformationPageRoute {
-  const CardInformationPageRoute();
+  const CardInformationPageRoute(this.$extra);
+
+  final Map<String, dynamic> $extra;
+
+  static const String cardKey = 'card';
 
   static final $parentNavigatorKey = $appNavigatorKey;
 
@@ -19,6 +23,12 @@ final class CardInformationPageRoute extends GoRouteData
       name: state.name,
       key: state.pageKey,
       child: ProviderScope(
+        overrides: [
+          cardAddSelectedCardProvider.overrideWith((ref) {
+            final card = $extra[cardKey] as CreditCardEntity;
+            return ref.disposeAndListenChangeNotifier(ValueNotifier(card));
+          }),
+        ],
         retry: (retryCount, error) => null,
         child: const CardInformationPage(),
       ),

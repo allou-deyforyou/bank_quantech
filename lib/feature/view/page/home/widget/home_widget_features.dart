@@ -32,13 +32,17 @@ class HomeSentActionButton extends StatelessWidget {
       iconColor: CupertinoColors.systemRed.resolveFrom(context),
       onPressed: _onPressed(context),
       icon: const Icon(CupertinoIcons.arrow_up),
-      label: "Sent",
+      label: "Send",
     );
   }
 
   VoidCallback? _onPressed(BuildContext context) {
+    final ref = ProviderScope.containerOf(context);
     return () {
-      // Navigator.of(context).pop();
+      final selectedCard = ref.read(homeSelectedCardProvider).value;
+      OperationSendPageRoute({
+        OperationSendPageRoute.cardKey: selectedCard,
+      }).push(context);
     };
   }
 }
@@ -57,8 +61,12 @@ class HomeReceiveActionButton extends StatelessWidget {
   }
 
   VoidCallback? _onPressed(BuildContext context) {
+    final ref = ProviderScope.containerOf(context);
     return () {
-      // Navigator.of(context).pop();
+      final selectedCard = ref.read(homeSelectedCardProvider).value;
+      OperationReceivePageRoute({
+        OperationReceivePageRoute.cardKey: selectedCard,
+      }).push(context);
     };
   }
 }
@@ -69,7 +77,7 @@ class HomeTopupActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HomeActionButton(
-      iconColor: CupertinoColors.label.resolveFrom(context),
+      banner: "Soon",
       onPressed: _onPressed(context),
       icon: const Icon(CupertinoIcons.cloud_upload),
       label: "Topup",
@@ -77,9 +85,7 @@ class HomeTopupActionButton extends StatelessWidget {
   }
 
   VoidCallback? _onPressed(BuildContext context) {
-    return () {
-      // Navigator.of(context).pop();
-    };
+    return null;
   }
 }
 
@@ -89,6 +95,7 @@ class HomePaymentActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HomeActionButton(
+      banner: "Soon",
       iconColor: CupertinoColors.label.resolveFrom(context),
       onPressed: _onPressed(context),
       icon: const Icon(CupertinoIcons.qrcode_viewfinder),
@@ -97,29 +104,44 @@ class HomePaymentActionButton extends StatelessWidget {
   }
 
   VoidCallback? _onPressed(BuildContext context) {
-    return () {
-      // Navigator.of(context).pop();
-    };
+    return null;
   }
 }
 
 class HomeActionButton extends StatelessWidget {
   const HomeActionButton({
     super.key,
-    this.onPressed,
+    this.banner,
     this.iconColor,
+    this.onPressed,
     required this.icon,
     required this.label,
   });
 
   final VoidCallback? onPressed;
   final Color? iconColor;
+  final String? banner;
   final Widget icon;
   final String label;
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+
+    final iconWidget = Container(
+      width: kMinInteractiveDimension,
+      height: kMinInteractiveDimension,
+      decoration: ShapeDecoration(
+        color: onPressed != null
+            ? theme.colorScheme.surfaceContainer
+            : theme.colorScheme.surface.withValues(alpha: 0.2),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+      ),
+      child: IconTheme(
+        data: IconThemeData(color: iconColor, size: 22.0),
+        child: icon,
+      ),
+    );
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
@@ -134,20 +156,23 @@ class HomeActionButton extends StatelessWidget {
         child: Column(
           spacing: 8.0,
           children: [
-            Container(
-              width: kMinInteractiveDimension,
-              height: kMinInteractiveDimension,
-              decoration: ShapeDecoration(
-                color: theme.colorScheme.surfaceContainerHighest,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              child: IconTheme(
-                data: IconThemeData(color: iconColor, size: 22.0),
-                child: icon,
-              ),
-            ),
+            if (banner != null)
+              Stack(
+                children: [
+                  iconWidget,
+                  Positioned(
+                    top: 0.0,
+                    right: 0.0,
+                    child: CornerBanner(
+                      bannerColor: Colors.red,
+                      bannerPosition: CornerBannerPosition.topRight,
+                      child: Text(banner!, style: TextStyle(fontSize: 10.0)),
+                    ),
+                  ),
+                ],
+              )
+            else
+              iconWidget,
             DefaultTextStyle.merge(
               maxLines: 2,
               overflow: TextOverflow.ellipsis,

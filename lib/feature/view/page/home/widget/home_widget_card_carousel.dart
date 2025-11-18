@@ -6,6 +6,8 @@ class HomeCardCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final deviceWitdh = MediaQuery.sizeOf(context).width;
+    final itemExtent = deviceWitdh - kTabLabelPadding.horizontal;
     return SafeArea(
       top: false,
       bottom: false,
@@ -22,18 +24,43 @@ class HomeCardCarousel extends StatelessWidget {
           ),
           SizedBox(
             height: 165.0,
-            child: CarouselView(
-              itemExtent: 320.0,
-              itemSnapping: true,
-              shrinkExtent: 320.0,
-              padding: kTabLabelPadding,
-              controller: CarouselController(),
-              onTap: _onTap(context),
-              children: [
-                Container(color: Colors.blue),
-                Container(color: Colors.yellow),
-                Container(color: Colors.red),
-              ],
+            child: Consumer(
+              builder: (context, ref, child) {
+                ref.watch(homeSelectedCardProvider);
+                final controller = ref.watch(homeCarouselControllerProvider);
+                final cardsValue = ref.watch(homeCardControllerProvider);
+                final cards = cardsValue.requireValue;
+                if (cards.length == 1) {
+                  return Center(
+                    child: Card(
+                      elevation: 0.0,
+                      margin: kTabLabelPadding,
+                      clipBehavior: Clip.antiAlias,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(18.0)),
+                      ),
+                      child: InkWell(
+                        onTap: () => _onTap(context)?.call(0),
+                        child: CreditCardView(color: cards.first.cardColor),
+                      ),
+                    ),
+                  );
+                }
+
+                return CarouselView(
+                  itemSnapping: true,
+                  itemExtent: itemExtent,
+                  shrinkExtent: itemExtent,
+                  padding: kTabLabelPadding,
+                  controller: controller,
+                  onTap: _onTap(context),
+                  children: List<Widget>.of(
+                    cards.map((card) {
+                      return CreditCardView(color: card.cardColor);
+                    }),
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -42,8 +69,17 @@ class HomeCardCarousel extends StatelessWidget {
   }
 
   ValueChanged<int>? _onTap(BuildContext context) {
+    final ref = ProviderScope.containerOf(context);
+    final selectedCard = ref.read(homeSelectedCardProvider);
     return (index) {
-      CardInformationPageRoute().push(context);
+      final cardsValue = ref.read(homeCardControllerProvider);
+      final cards = cardsValue.requireValue;
+      final card = cards[index];
+      selectedCard.value = card;
+
+      CardInformationPageRoute({
+        CardInformationPageRoute.cardKey: card,
+      }).push(context);
     };
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:card_swiper/card_swiper.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:stacked_list_carousel/stacked_list_carousel.dart';
 
 import 'package:bank_quantech/feature/feature.dart';
 

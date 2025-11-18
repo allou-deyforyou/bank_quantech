@@ -36,9 +36,10 @@ class HomeAppBarNotifButton extends StatelessWidget {
     );
   }
 
-  VoidCallback _onPressed(BuildContext context) {
-    return () {
-      // Navigator.of(context).pop();
-    };
+  VoidCallback? _onPressed(BuildContext context) {
+    return null;
+    // return () {
+    //   // Navigator.of(context).pop();
+    // };
   }
 }

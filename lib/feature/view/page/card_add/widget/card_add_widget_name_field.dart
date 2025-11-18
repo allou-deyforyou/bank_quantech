@@ -23,25 +23,44 @@ class CardAddNameField extends StatelessWidget {
           bottom: false,
           minimum: kTabLabelPadding,
           child: SizedBox(
-            height: kMinInteractiveDimension,
-            child: TextFormField(
-              keyboardType: TextInputType.name,
-              autofillHints: [
-                AutofillHints.name,
-                AutofillHints.nickname,
-                AutofillHints.familyName,
-              ],
-              inputFormatters: [],
-              decoration: InputDecoration(
-                hintText: 'Ex: John Doe',
-                hintStyle: theme.textTheme.bodyLarge!.copyWith(
-                  color: CupertinoColors.placeholderText.resolveFrom(context),
+            height: kMinInteractiveDimension + 13.0,
+            child: Column(
+              children: [
+                Consumer(
+                  builder: (context, ref, child) {
+                    final controller = ref.watch(cardAddNameControllerProvider);
+                    return TextFormField(
+                      controller: controller,
+                      keyboardType: TextInputType.name,
+                      autofillHints: [
+                        AutofillHints.name,
+                        AutofillHints.nickname,
+                        AutofillHints.familyName,
+                      ],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your name';
+                        }
+                        if (value.length < 2) {
+                          return 'Name must be at least 2 characters long';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Ex: John Doe',
+                        hintStyle: theme.textTheme.bodyLarge!.copyWith(
+                          color: CupertinoColors.placeholderText.resolveFrom(
+                            context,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              ),
+              ],
             ),
           ),
         ),
-        SizedBox(height: 6.0),
       ],
     );
   }

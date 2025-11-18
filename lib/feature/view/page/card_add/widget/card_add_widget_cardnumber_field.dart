@@ -23,23 +23,51 @@ class CardAddCardNumberField extends StatelessWidget {
           bottom: false,
           minimum: kTabLabelPadding,
           child: SizedBox(
-            height: kMinInteractiveDimension,
-            child: TextFormField(
-              keyboardType: TextInputType.number,
-              autofillHints: [
-                AutofillHints.creditCardNumber,
-              ],
-              inputFormatters: [],
-              decoration: InputDecoration(
-                hintText: 'Ex: 1234 5678 9012 3456',
-                hintStyle: theme.textTheme.bodyLarge!.copyWith(
-                  color: CupertinoColors.placeholderText.resolveFrom(context),
+            height: kMinInteractiveDimension + 13.0,
+            child: Column(
+              children: [
+                Consumer(
+                  builder: (context, ref, child) {
+                    final controller = ref.watch(
+                      cardAddCardNumberControllerProvider,
+                    );
+                    return TextFormField(
+                      controller: controller,
+                      keyboardType: TextInputType.number,
+                      autofillHints: [AutofillHints.creditCardNumber],
+                      inputFormatters: [
+                          MaskTextInputFormatter(
+                          type: MaskAutoCompletionType.eager,
+                          filter: {"#": RegExp(r'[0-9]')},
+                          mask: '#### ####',
+                        ),
+                      ],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a valid card number';
+                        }
+                        if (!RegExp(
+                          r'^[0-9]{8,19}$',
+                        ).hasMatch(value.replaceAll(' ', ''))) {
+                          return 'Card number must be between 8 and 19 digits';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Ex: 1234 5678',
+                        hintStyle: theme.textTheme.bodyLarge!.copyWith(
+                          color: CupertinoColors.placeholderText.resolveFrom(
+                            context,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              ),
+              ],
             ),
           ),
         ),
-        SizedBox(height: 6.0),
       ],
     );
   }

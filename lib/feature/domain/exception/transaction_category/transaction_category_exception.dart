@@ -216,3 +216,11 @@ class SystemCategoryArchiveException extends TransactionCategoryException {
   const SystemCategoryArchiveException(String categoryId)
     : super('Cannot archive system category', 'Category ID: $categoryId');
 }
+
+class CategoryUnknownException extends TransactionCategoryException {
+  const CategoryUnknownException()
+    : super(
+        'Unknown category error',
+        'An unknown error has occurred with the category',
+      );
+}

@@ -119,7 +119,9 @@ class AppThemes {
     bottomSheetTheme: _bottomSheetTheme,
     filledButtonTheme: _filledButtonTheme,
     outlinedButtonTheme: _outlineButtonTheme,
-    inputDecorationTheme: _inputDecorationTheme,
+    inputDecorationTheme: _inputDecorationTheme.copyWith(
+      fillColor: const Color(0xFF23265A),
+    ),
     floatingActionButtonTheme: _floatingActionButtonTheme,
     scaffoldBackgroundColor: const Color(0xFF121433),
     appBarTheme: _appBarTheme.copyWith(
@@ -132,6 +134,7 @@ class AppThemes {
     colorScheme: ColorScheme.fromSeed(
       tertiaryContainer: const Color(0xFF593F3F),
       surface: const Color(0xFF23265A),
+      surfaceContainer: const Color(0xFF23265A),
       brightness: Brightness.dark,
       onTertiary: Colors.white,
       onPrimary: Colors.white,
