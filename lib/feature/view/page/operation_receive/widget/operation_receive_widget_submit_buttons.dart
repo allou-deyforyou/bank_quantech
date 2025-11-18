@@ -47,17 +47,18 @@ class OperationReceiveSaveButton extends StatelessWidget {
   }
 
   VoidCallback? _onPressed(BuildContext context) {
-    final ref = ProviderScope.containerOf(context);
-    return () async {
-      if (Form.of(context).validate()) {
-        context.startLoading();
-        await ref.refresh(operationReceiveControllerProvider.future);
-        if (context.mounted) {
-          context.stopLoading();
-          const HomePageRoute().go(context);
-        }
-      }
-    };
+    return null;
+    // final ref = ProviderScope.containerOf(context);
+    // return () async {
+    //   if (Form.of(context).validate()) {
+    //     context.startLoading();
+    //     await ref.refresh(operationReceiveControllerProvider.future);
+    //     if (context.mounted) {
+    //       context.stopLoading();
+    //       const HomePageRoute().go(context);
+    //     }
+    //   }
+    // };
   }
 }
 

@@ -12,8 +12,8 @@
       "args": [
         // "--flavor",
         // "prod",
-        "--dart-define-from-file",
-        ".env/.prod.env",
+        // "--dart-define-from-file",
+        // ".env/.prod.env",
         "--target",
         "lib/main.dart",
         // "--release",
