@@ -7,7 +7,7 @@ class CardInformationBalance extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = context.theme;
     final selectCard = ref.watch(cardAddSelectedCardProvider);
-    // final account = selectCard.value.account!;
+    final account = selectCard.value.account!;
     return ListTile(
       titleTextStyle: theme.textTheme.titleMedium!.copyWith(
         color: theme.colorScheme.onSurfaceVariant,
@@ -23,7 +23,7 @@ class CardInformationBalance extends ConsumerWidget {
       title: const Text("Total Balance"),
       subtitle: Row(
         children: [
-          Expanded(child: Text("\$ 0.00")),
+          Expanded(child: Text("${account.currency} ${account.balance}")),
           Text.rich(
             TextSpan(
               children: [

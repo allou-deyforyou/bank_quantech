@@ -114,9 +114,7 @@ class HomeTransactionsWidget extends StatelessWidget {
     );
   }
 
-  VoidCallback _onTap(BuildContext context) {
-    return () {
-      const TransactionsDetailsPageRoute().push(context);
-    };
+  VoidCallback? _onTap(BuildContext context) {
+    return null;
   }
 }

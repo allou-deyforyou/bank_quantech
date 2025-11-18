@@ -15,7 +15,7 @@
         "--dart-define-from-file",
         ".env/.prod.env",
         "--target",
-        "lib/main_mock.dart",
+        "lib/main.dart",
         // "--release",
       ]
     }

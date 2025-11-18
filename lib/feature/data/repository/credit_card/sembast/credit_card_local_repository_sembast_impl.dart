@@ -20,10 +20,19 @@ final class CreditCardLocalRepositorySembastImpl
   Future<Result<void>> saveCreditCards(List<CreditCardEntity> cards) async {
     try {
       final db = await _sembastDataSource.getDatabaseInstance();
+      await db.transaction((tn) async {
+        final data = CreditCardSembastModel.fromCreditCardEntities(cards)!;
+        final accounts = List.of(
+          data.expand((element) {
+            return [element.account].nonNulls;
+          }),
+        );
+        final accountValues = AccountSembastModel.toListMap(accounts)!;
+        await AccountSembastModel.box.addAll(tn, accountValues);
 
-      final data = CreditCardSembastModel.fromCreditCardEntities(cards)!;
-      final values = CreditCardSembastModel.toListMap(data)!;
-      await CreditCardSembastModel.box.addAll(db, values);
+        final values = CreditCardSembastModel.toListMap(data)!;
+        return await CreditCardSembastModel.box.addAll(tn, values);
+      });
 
       return Result.ok(null);
     } catch (e) {

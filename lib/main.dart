@@ -9,7 +9,10 @@ void main() {
     ProviderScope(
       retry: (retryCount, error) => null,
       overrides: [
-        //
+        accountRepositoryMockProvider,
+        creditCardRepositoryMockProvider,
+        transactionRepositoryMockProvider,
+        categoryRepositoryMockProvider,
       ],
       observers: const [LoggerObserver()],
       child: const MyApp(),
