@@ -24,7 +24,6 @@ dependencies:
   stacked_list_carousel: ^1.1.0
   super_banners: ^0.0.1
   # Natifs
-  flutter_local_notifications: ^19.4.1
   flutter_native_splash: ^2.4.7
   # sembast_sqflite: ^2.2.1
   path_provider: ^2.1.5
